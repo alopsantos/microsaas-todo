@@ -1,11 +1,11 @@
 import { auth } from "@/services/auth";
+import { UserInfo } from "./_components/user-info";
+
 export default async function Page() {
   const session = await auth();
   return (
     <main>
-      <div>
-        <pre>{JSON.stringify(session?.user?.email, null, 1)}</pre>
-      </div>
+      <UserInfo user={session?.user} />
     </main>
   );
 }
