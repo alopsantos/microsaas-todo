@@ -1,61 +1,71 @@
 "use client";
 import {
-  Sidebar,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarHeaderTitle,
-  SidebarMain,
-  SidebarNav,
-  SidebarNavHeader,
-  SidebarNavHeaderTitle,
-  SidebarNavLink,
-  SidebarNavMain
+  DashboardSidebar,
+  DashboardSidebarFooter,
+  DashboardSidebarHeader,
+  DashboardSidebarMain,
+  DashboardSidebarNav,
+  DashboardSidebarNavHeader,
+  DashboardSidebarNavHeaderTitle,
+  DashboardSidebarNavLink,
+  DashboardSidebarNavMain
 } from "@/components/dashboard/sidebar";
 import { BookOpenText } from "@phosphor-icons/react/dist/ssr/BookOpenText";
 import { Sliders } from "@phosphor-icons/react/dist/ssr/Sliders";
 import { usePathname } from "next/navigation";
 import { UserDropdown } from "./user-dropdown";
-export function MainSidebar() {
+import { Session } from "next-auth";
+
+type MainSidebarProps = {
+  user: Session["user"];
+};
+
+export function MainSidebar({ user }: MainSidebarProps) {
   const pathname = usePathname();
   const isActive = (path: string) => {
     return pathname === path;
   };
+
+  if (!user) return;
+
   return (
-    <Sidebar>
-      <SidebarHeader>
+    <DashboardSidebar>
+      <DashboardSidebarHeader>
         <h1></h1>
-      </SidebarHeader>
-      <SidebarMain className="flex flex-col flex-grow">
-        <SidebarNav>
-          <SidebarNavMain>
-            <SidebarNavLink active={isActive("/app")} href="/app">
+      </DashboardSidebarHeader>
+      <DashboardSidebarMain className="flex flex-col flex-grow">
+        <DashboardSidebarNav>
+          <DashboardSidebarNavMain>
+            <DashboardSidebarNavLink active={isActive("/app")} href="/app">
               Tarefas
               <BookOpenText size={24} />
-            </SidebarNavLink>
-            <SidebarNavLink
+            </DashboardSidebarNavLink>
+            <DashboardSidebarNavLink
               href="/app/settings"
               active={isActive("/app/settings")}
             >
               Configurações
               <Sliders size={24} />
-            </SidebarNavLink>
-          </SidebarNavMain>
-        </SidebarNav>
+            </DashboardSidebarNavLink>
+          </DashboardSidebarNavMain>
+        </DashboardSidebarNav>
 
-        <SidebarNav className="mt-auto">
-          <SidebarNavHeader>
-            <SidebarNavHeaderTitle>Extras</SidebarNavHeaderTitle>
-          </SidebarNavHeader>
-          <SidebarNavMain>
-            <SidebarNavLink href="/" active={isActive("/ajuda")}>
+        <DashboardSidebarNav className="mt-auto">
+          <DashboardSidebarNavHeader>
+            <DashboardSidebarNavHeaderTitle>
+              Extras
+            </DashboardSidebarNavHeaderTitle>
+          </DashboardSidebarNavHeader>
+          <DashboardSidebarNavMain>
+            <DashboardSidebarNavLink href="/" active={isActive("/ajuda")}>
               Ajuda
-            </SidebarNavLink>
-          </SidebarNavMain>
-        </SidebarNav>
-      </SidebarMain>
-      <SidebarFooter>
-        <UserDropdown />
-      </SidebarFooter>
-    </Sidebar>
+            </DashboardSidebarNavLink>
+          </DashboardSidebarNavMain>
+        </DashboardSidebarNav>
+      </DashboardSidebarMain>
+      <DashboardSidebarFooter>
+        <UserDropdown user={user} />
+      </DashboardSidebarFooter>
+    </DashboardSidebar>
   );
 }

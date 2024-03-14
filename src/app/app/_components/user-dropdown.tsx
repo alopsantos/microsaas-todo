@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,19 +10,31 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
 
-export function UserDropdown() {
+type UserDropdownProps = {
+  user: Session["user"];
+};
+export function UserDropdown({ user }: UserDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Button variant="link" className="space-x-2">
           <Avatar>
+            <AvatarImage
+              src={user?.image as string}
+              alt={`Foto do peril do usuario ${user?.name}`}
+            />
+
             <AvatarFallback>AL</AvatarFallback>
           </Avatar>
           <div className="flex flex-col space-y-1 gap-2 flex-1 text-left">
-            <p className="text-sm font-medium leading-none">Anderson Lopes</p>
+            {user?.name && (
+              <p className="text-sm font-medium leading-none">{user?.name}</p>
+            )}
             <p className="text-xs leading-none text-muted-foreground">
-              anderson_lops@hotmail.com
+              {user?.email}
             </p>
           </div>
         </Button>
@@ -30,9 +42,9 @@ export function UserDropdown() {
       <DropdownMenuContent>
         <DropdownMenuItem>
           <div className="flex flex-col space-y-1 gap-2 flex-1 text-left">
-            <p className="text-sm font-medium leading-none">Anderson Lopes</p>
+            <p className="text-sm font-medium leading-none">{user?.name}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              anderson_lops@hotmail.com
+              {user?.email}
             </p>
           </div>
         </DropdownMenuItem>
@@ -41,7 +53,7 @@ export function UserDropdown() {
         <DropdownMenuSeparator />
         <DropdownMenuItem>Upgrade</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Logout</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

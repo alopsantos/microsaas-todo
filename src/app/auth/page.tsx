@@ -1,12 +1,9 @@
-import {
-  DashboardPage,
-  DashboardPageHeader
-} from "@/components/dashboard/page";
+import { AuthForm } from "./_components/auth-form";
 
 export default function Page() {
   return (
-    <DashboardPage>
-      <DashboardPageHeader>Ola</DashboardPageHeader>
-    </DashboardPage>
+    <main className="flex flex-col justify-center items-center h-screen">
+      <AuthForm />
+    </main>
   );
 }

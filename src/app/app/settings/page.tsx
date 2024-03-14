@@ -1,7 +1,19 @@
+import {
+  DashboardPage,
+  DashboardPageHeader,
+  DashboardPageHeaderTitle,
+  DashboardPageMain
+} from "@/components/dashboard/page";
+
 export default function Page() {
   return (
-    <div>
-      <h1>configuracoes</h1>
-    </div>
+    <DashboardPage>
+      <DashboardPageHeader>
+        <DashboardPageHeaderTitle>Configurações</DashboardPageHeaderTitle>
+      </DashboardPageHeader>
+      <DashboardPageMain>
+        <h3 className="text-sm">Configurações</h3>
+      </DashboardPageMain>
+    </DashboardPage>
   );
 }
