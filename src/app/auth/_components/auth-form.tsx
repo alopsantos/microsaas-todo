@@ -6,6 +6,7 @@ import {
   CardContent,
   Card
 } from "@/components/ui/card";
+import { Spinner } from "@phosphor-icons/react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,7 +18,7 @@ export function AuthForm() {
   const form = useForm();
   const handleSubmit = form.handleSubmit(async (data) => {
     try {
-      await signIn("email", { email: data.email, redirect: false });
+      await signIn("nodemailer", { email: data.email, redirect: false });
       toast({
         title: "Magic Link Sent",
         description: "Check your email for the magic link to login"
@@ -49,8 +50,17 @@ export function AuthForm() {
               {...form.register("email")}
             />
           </div>
-          <Button className="w-full" type="submit">
+          <Button
+            className="w-full flex gap-4"
+            type="submit"
+            disabled={form.formState.isSubmitting}
+          >
             Send Magic Link
+            <Spinner
+              data-active={form.formState.isSubmitting}
+              className="data-[active=true]:flex hidden animate-spin"
+              size={32}
+            />
           </Button>
         </CardContent>
       </form>
