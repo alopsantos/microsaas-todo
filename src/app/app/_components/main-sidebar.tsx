@@ -15,6 +15,7 @@ import { Sliders } from "@phosphor-icons/react/dist/ssr/Sliders";
 import { usePathname } from "next/navigation";
 import { UserDropdown } from "./user-dropdown";
 import { Session } from "next-auth";
+import { Logo } from "@/components/Logo";
 
 type MainSidebarProps = {
   user: Session["user"];
@@ -30,8 +31,8 @@ export function MainSidebar({ user }: MainSidebarProps) {
 
   return (
     <DashboardSidebar>
-      <DashboardSidebarHeader>
-        <h1></h1>
+      <DashboardSidebarHeader className="flex p-3 w-full justify-center">
+        <Logo />
       </DashboardSidebarHeader>
       <DashboardSidebarMain className="flex flex-col flex-grow">
         <DashboardSidebarNav>
